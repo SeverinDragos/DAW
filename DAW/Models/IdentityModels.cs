@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,8 @@ namespace DAW.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -24,6 +27,9 @@ namespace DAW.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
 
         public static ApplicationDbContext Create()
         {

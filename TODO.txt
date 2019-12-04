@@ -1,0 +1,3 @@
+1. Curs 7 inceput - Roluri. Asocierea dintre roluri si utilizatori
+2. Project C.R.U.D.
+3. Many-to-many intre Project si ApplicationUser
