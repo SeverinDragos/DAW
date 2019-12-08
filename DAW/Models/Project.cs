@@ -12,9 +12,9 @@ namespace DAW.Models
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
+        [Required]
+        public string ProjectManagerId { get; set; }
         public string Description { get; set; }
-        public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<ApplicationUser> TeamMembers { get; set; }
     }

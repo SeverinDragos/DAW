@@ -1,0 +1,15 @@
+﻿@model DAW.Models.Project
+
+<h1>@Model.Title</h1>
+<p>@Model.Description</p>
+
+@foreach (var user in Model.TeamMembers)
+{
+    if (user.Id == Model.ProjectManagerId)
+    {
+        <strong>Project manager: @user.UserName</strong>
+        <br />
+    }
+}
+
+

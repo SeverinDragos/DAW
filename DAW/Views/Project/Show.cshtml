@@ -1,0 +1,13 @@
+﻿@model DAW.Models.Project
+
+@Html.Partial("ProjectInfo", Model)
+<br />
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Project", routeValues: new { id = Model.Id }))
+{
+    <button type="submit">Edit</button>
+}
+@using (Html.BeginForm(actionName: "Delete", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    <button type="submit">Delete</button>
+}

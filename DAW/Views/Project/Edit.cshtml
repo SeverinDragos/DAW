@@ -1,0 +1,20 @@
+﻿@model DAW.Models.Project
+
+<h2>Edit @Model.Title</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Project"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Label("Title", "Project title");
+    <br />
+    @Html.EditorFor(m => m.Title)
+    <br />
+    @Html.Label("Description", "Project description");
+    <br />
+    @Html.EditorFor(m => m.Description)
+    <br />
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ProjectManagerId)
+    <br />
+    <button class="btn btn-sm btn-success" type="submit">Edit project</button>
+}

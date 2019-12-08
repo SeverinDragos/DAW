@@ -242,6 +242,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Shared\ProjectInfo.cshtml" />
+    <Content Include="Views\Project\New.cshtml" />
+    <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Show.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

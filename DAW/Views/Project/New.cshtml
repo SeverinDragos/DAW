@@ -1,0 +1,21 @@
+﻿@model DAW.Models.Project
+@{
+    ViewBag.Title = "New Project";
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Project"))
+{
+    @Html.Label("Title", "Project title")
+    <br />
+    @Html.TextBox("Title", "", new { @class = "form-control" })
+    <br />
+    @Html.Label("Description", "Project description")
+    <br />
+    @Html.TextArea("Description", "", new { @class = "form-control" })
+    <br />
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ProjectManagerId)
+    @Html.HiddenFor(m => m.TeamMembers)
+    <button class="btn btn-sm btn-success" type="submit"> Create project</button>
+}

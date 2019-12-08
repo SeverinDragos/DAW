@@ -29,11 +29,15 @@ namespace DAW.Models
         }
 
         public DbSet<Project> Projects { get; set; }
-        public DbSet<ApplicationUser> Users { get; set; }
-
+        
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

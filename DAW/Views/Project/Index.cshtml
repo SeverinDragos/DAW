@@ -1,7 +1,15 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Projects";
 }
-
-<h2>Index</h2>
-
+<h2>@ViewBag.Title</h2>
+<hr />
+@foreach (DAW.Models.Project project in ViewBag.Projects)
+{
+    @Html.Partial("ProjectInfo", project);
+    <br />
+    using (Html.BeginForm(actionName: "Show", controllerName: "Project", routeValues: new { id = project.Id }))
+    {
+        <button type="submit">View Project</button>
+    }
+    <hr />
+}
