@@ -246,6 +246,8 @@
     <Content Include="Views\Project\New.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Show.cshtml" />
+    <Content Include="Views\Shared\RemoveButton.cshtml" />
+    <Content Include="Views\Project\TeamMembers.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

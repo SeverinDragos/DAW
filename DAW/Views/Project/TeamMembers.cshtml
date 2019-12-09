@@ -1,0 +1,35 @@
+﻿@model DAW.Models.Project
+
+<h2>@Model.Title Team</h2>
+
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+}
+
+<select>
+    <option selected="selected">Select user</option>
+    @foreach (var user in ViewBag.AllUsers)
+    {
+        <option value=@user.Id>@user.UserName</option>
+    }
+</select>
+
+@using (Html.BeginForm(actionName: "AddTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id /*, userId = ???*/}))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    <button type="submit">Add Member ➕</button>
+}
+
+<hr />
+
+@foreach (var user in Model.TeamMembers)
+{
+    @user.UserName
+    using (Html.BeginForm(actionName: "RemoveTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id, userId = user.Id }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button type="submit">Delete <span style="color:red">✘</span></button>
+    }
+}
+

@@ -4,8 +4,14 @@
 <br />
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Project", routeValues: new { id = Model.Id }))
 {
-    <button type="submit">Edit</button>
+    <button type="submit">Update</button>
 }
+<br />
+@using (Html.BeginForm(actionName: "ShowTeamMembers", controllerName: "Project", routeValues: new { id = Model.Id }))
+{
+    <button type="submit">Project Members</button>
+}
+<br />
 @using (Html.BeginForm(actionName: "Delete", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id }))
 {
     @Html.HttpMethodOverride(HttpVerbs.Delete)

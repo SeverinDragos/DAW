@@ -1,0 +1,7 @@
+﻿@model DAW.Models.Project
+
+@using (Html.BeginForm(actionName: "RemoveTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    <button type="submit">Delete <span style="color:red">✘</span></button>
+}

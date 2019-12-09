@@ -3,6 +3,10 @@
 }
 <h2>@ViewBag.Title</h2>
 <hr />
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+}
 @foreach (DAW.Models.Project project in ViewBag.Projects)
 {
     @Html.Partial("ProjectInfo", project);
