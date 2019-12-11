@@ -1,5 +1,9 @@
 ﻿@model DAW.Models.Project
 
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+}
 @Html.Partial("ProjectInfo", Model)
 <br />
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Project", routeValues: new { id = Model.Id }))
@@ -16,4 +20,17 @@
 {
     @Html.HttpMethodOverride(HttpVerbs.Delete)
     <button type="submit">Delete</button>
+}
+<h2>Current Tasks:</h2>
+<hr />
+@foreach (var task in Model.Tasks)
+{
+    <h2>@task.Title</h2>
+    <p>@task.Description</p>
+    <strong>Assigned to: @task.User.UserName</strong>
+}
+<hr />
+@using (Html.BeginForm(actionName: "New", controllerName: "ProjectTask", method: FormMethod.Post, routeValues: new { projectId = Model.Id }))
+{
+    <button type="submit">Add Task</button>
 }

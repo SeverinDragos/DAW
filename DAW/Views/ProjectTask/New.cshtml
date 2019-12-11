@@ -1,0 +1,31 @@
+﻿@model DAW.Models.ProjectTask
+@{
+    ViewBag.Title = "New Task";
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "ProjectTask"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.HiddenFor(m => m.Id)
+    @Html.Label("Title", "Task title")
+    <br />
+    @Html.TextBox("Title", "", new { @class = "form-control" })
+    <br />
+    @Html.Label("Description", "Task description")
+    <br />
+    @Html.TextArea("Description", "", new { @class = "form-control" })
+
+    @Html.Hidden("Status", 0, new { @class = "form-control" })
+    @Html.Hidden("StartDate", DateTime.Now, new { @class = "form-control" })
+
+    @Html.Label("FinishDate", "Finish Date")
+    <br />
+    @Html.EditorFor(m => m.FinishDate)
+    <br />
+    <br />
+    @Html.DropDownListFor(m => m.UserId, new SelectList(ViewBag.Users, "Id", "UserName"), "Assigned to", new { @class = "form-control" })
+    <br />
+    @Html.HiddenFor(m => m.ProjectId)
+    <button class="btn btn-sm btn-success" type="submit"> Create Task</button>
+}
