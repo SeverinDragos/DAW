@@ -9,6 +9,13 @@ namespace DAW.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult Show(int id)
+        {
+            ProjectTask task = db.Tasks.Find(id);
+
+            return View(task);
+        }
+
         [HttpPost]
         public ActionResult New(int projectId)
         {
@@ -30,7 +37,7 @@ namespace DAW.Controllers
                     db.Tasks.Add(task);
                     db.SaveChanges();
                     TempData["message"] = "✔ Task created successfully!";
-                    return RedirectToRoute("Project/Show/" + task.ProjectId);
+                    return Redirect("/Project/Show/" + task.ProjectId);
                 }
                 else
                 {

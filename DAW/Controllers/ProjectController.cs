@@ -173,12 +173,28 @@ namespace DAW.Controllers
         }
 
         [HttpPut]
-        public ActionResult AddTeamMember(int id, string userId)
+        public ActionResult AddTeamMember(int id, Project requestProject)
         {
             Project project = db.Projects.Find(id);
-            ApplicationUser user = db.Users.Find(userId);
+            if (requestProject.NewUserId != null)
+            {
+                ApplicationUser user = db.Users.Find(requestProject.NewUserId);
+                if (project.TeamMembers.Contains(user) == false)
+                {
+                    project.TeamMembers.Add(user);
+                    db.SaveChanges();
+                    TempData["message"] = "✔ Member added successfully!";
+                }
+                else
+                {
+                    TempData["message"] = "This member is already part of the team!";
+                }
+            }
+            else
+            {
+                TempData["message"] = "Please select a user to be added!";
+            }
             ViewBag.AllUsers = db.Users;
-            TempData["message"] = "✔ Member added successfully!" + user.UserName;
             return View("TeamMembers", project);
         }
 
@@ -187,8 +203,10 @@ namespace DAW.Controllers
         {
             Project project = db.Projects.Find(id);
             ApplicationUser user = db.Users.Find(userId);
+            project.TeamMembers.Remove(user);
+            db.SaveChanges();
+            TempData["message"] = "✔ Member removed successfully!";
             ViewBag.AllUsers = db.Users;
-            TempData["message"] = "✔ Member removed successfully!" + user.UserName;
             return View("TeamMembers", project);
         }
     }

@@ -7,17 +7,11 @@
     <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
 }
 
-<select>
-    <option selected="selected">Select user</option>
-    @foreach (var user in ViewBag.AllUsers)
-    {
-        <option value=@user.Id>@user.UserName</option>
-    }
-</select>
-
-@using (Html.BeginForm(actionName: "AddTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id /*, userId = ???*/}))
+@using (Html.BeginForm(actionName: "AddTeamMember", controllerName: "Project", method: FormMethod.Post))
 {
     @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.HiddenFor(m => m.Id)
+    @Html.DropDownListFor(m => m.NewUserId, new SelectList(ViewBag.AllUsers, "Id", "UserName"), "Select new member", new { @class = "form-control" })
     <button type="submit">Add Member ➕</button>
 }
 
@@ -25,11 +19,14 @@
 
 @foreach (var user in Model.TeamMembers)
 {
-    @user.UserName
-    using (Html.BeginForm(actionName: "RemoveTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id, userId = user.Id }))
+    <p>@user.UserName</p>
+    if (user.Id != Model.ProjectManagerId)
     {
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-        <button type="submit">Delete <span style="color:red">✘</span></button>
+        using (Html.BeginForm(actionName: "RemoveTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id, userId = user.Id }))
+        {
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button type="submit">Delete <span style="color:red">✘</span></button>
+        }
     }
 }
 
