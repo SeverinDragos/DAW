@@ -1,0 +1,19 @@
+﻿@model DAW.Models.ProjectTask
+
+<h2>Edit @Model.Title</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "ProjectTask"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Label("Title", "Project title");
+    <br />
+    @Html.EditorFor(m => m.Title)
+    <br />
+    @Html.Label("Description", "Project description");
+    <br />
+    @Html.EditorFor(m => m.Description)
+    <br />
+    @Html.DropDownListFor(m => m.NewStatus, new SelectList(ViewBag.AllStatuses), Model.Status.ToString(), new { @class = "form-control" })
+    <br />
+    <button class="btn btn-sm btn-success" type="submit">Update project</button>
+}

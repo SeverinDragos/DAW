@@ -20,6 +20,7 @@ namespace DAW.Models
 
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectTask> Tasks { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -31,6 +32,7 @@ namespace DAW.Models
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectTask> Tasks { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         
         public static ApplicationDbContext Create()
         {

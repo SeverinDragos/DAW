@@ -1,0 +1,15 @@
+﻿@model DAW.Models.Comment
+@{
+    ViewBag.Title = "New";
+}
+@using (Html.BeginForm(actionName: "New", controllerName: "Comment", method: FormMethod.Post))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.HiddenFor(m => m.UserId)
+    @Html.HiddenFor(m => m.TaskId)
+    @Html.Label("Content", "Write your comment")
+    <br />
+    @Html.TextArea("Content", "", new { @class = "form-control" })
+    <br />
+    <button class="btn btn-sm btn-success" type="submit"> Add comment</button>
+}

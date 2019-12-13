@@ -19,12 +19,12 @@ namespace DAW.Models
         public DateTime StartDate { get; set; }
         [DataType(DataType.Date)]
         public DateTime FinishDate { get; set; }
+        public Status NewStatus { get; set; }
 
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-
     }
 }

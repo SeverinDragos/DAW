@@ -1,0 +1,47 @@
+﻿@model DAW.Models.ProjectTask
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+}
+<br />
+<h3>@Model.Title</h3>
+<p style="color:mediumblue">@Model.Status</p>
+<br />
+<p>@Model.Description</p>
+@using (Html.BeginForm(actionName: "Edit", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
+{
+    <button type="submit">Edit Task</button>
+}
+<br />
+@using (Html.BeginForm(actionName: "Delete", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    <button type="submit">Delete Task</button>
+}
+<strong>Assigned to: @Model.User.UserName</strong>
+<br />
+<strong>Start Date: </strong>
+<p>@Model.StartDate</p>
+<strong>End Date: </strong>
+<p>@Model.FinishDate</p>
+
+@foreach (var comm in Model.Comments)
+{
+    <p>@comm.User.UserName</p>
+    <p>@comm.Content</p>
+    if (comm.UserId == ViewBag.currentUserId || ViewBag.isAdmin)
+    {
+        using (Html.BeginForm(actionName: "Edit", controllerName: "Comment", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+        {
+            <button type="submit">Edit</button>
+        }
+    }
+}
+@using (Html.BeginForm(actionName: "New", controllerName: "Comment", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+{
+    <button type="submit">New Comment</button>
+}
+
+
+
+

@@ -28,6 +28,10 @@
     <h2>@task.Title</h2>
     <p>@task.Description</p>
     <strong>Assigned to: @task.User.UserName</strong>
+    using (Html.BeginForm(actionName: "Show", controllerName: "ProjectTask", routeValues: new { Id = task.Id }))
+    {
+        <button type="submit">Show Task</button>
+    }
 }
 <hr />
 @using (Html.BeginForm(actionName: "New", controllerName: "ProjectTask", method: FormMethod.Post, routeValues: new { projectId = Model.Id }))
