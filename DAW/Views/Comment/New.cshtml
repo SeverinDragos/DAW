@@ -1,7 +1,4 @@
 ﻿@model DAW.Models.Comment
-@{
-    ViewBag.Title = "New";
-}
 @using (Html.BeginForm(actionName: "New", controllerName: "Comment", method: FormMethod.Post))
 {
     @Html.HttpMethodOverride(HttpVerbs.Put)

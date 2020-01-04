@@ -51,5 +51,51 @@ namespace DAW.Controllers
                 return View(comm);
             }
         }
+
+        public ActionResult Edit(int id)
+        {
+            Comment comment = db.Comments.Find(id);
+
+            return View(comment);
+        }
+
+        [HttpPut]
+        public ActionResult Edit(int id, Comment requestComment)
+        {
+            Comment comment = db.Comments.Find(id);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (TryUpdateModel(comment))
+                    {
+                        comment.Content = requestComment.Content;
+                        db.SaveChanges();
+                        TempData["message"] = "✔ Comment updated successfully!";
+                    }
+                    return Redirect("/ProjectTask/Show/" + comment.TaskId);
+                }
+                else
+                {
+                    TempData["message"] = "Introduced information cannot be saved!";
+                    return Redirect("/ProjectTask/Show/" + comment.TaskId);
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = "An error occured during comment editing!";
+                return Redirect("/ProjectTask/Show/" + comment.TaskId);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            Comment comment = db.Comments.Find(id);
+            db.Comments.Remove(comment);
+            db.SaveChanges();
+            TempData["message"] = "✔ Comment removed successfully!";
+            return Redirect("/ProjectTask/Show/" + comment.TaskId);
+        }
     }
 }

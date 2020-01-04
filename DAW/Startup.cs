@@ -55,6 +55,13 @@ namespace DAW
                 role.Name = "User";
                 roleManager.Create(role);
             }
+
+            if (!roleManager.RoleExists("TeamMember"))
+            {
+                var role = new IdentityRole();
+                role.Name = "TeamMember";
+                roleManager.Create(role);
+            }
         }
     }
 }

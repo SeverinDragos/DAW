@@ -13,6 +13,7 @@ namespace DAW.Controllers
     public class ProjectController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
+
         
         public ActionResult Index()
         {
@@ -176,12 +177,15 @@ namespace DAW.Controllers
         public ActionResult AddTeamMember(int id, Project requestProject)
         {
             Project project = db.Projects.Find(id);
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             if (requestProject.NewUserId != null)
             {
                 ApplicationUser user = db.Users.Find(requestProject.NewUserId);
                 if (project.TeamMembers.Contains(user) == false)
                 {
                     project.TeamMembers.Add(user);
+                    UserManager.RemoveFromRole(user.Id, "User");
+                    UserManager.AddToRole(user.Id, "TeamMember");
                     db.SaveChanges();
                     TempData["message"] = "✔ Member added successfully!";
                 }
@@ -203,7 +207,14 @@ namespace DAW.Controllers
         {
             Project project = db.Projects.Find(id);
             ApplicationUser user = db.Users.Find(userId);
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             project.TeamMembers.Remove(user);
+            db.SaveChanges();
+            if (user.Projects.Count == 0)
+            {
+                UserManager.RemoveFromRole(userId, "TeamMember");
+                UserManager.AddToRole(userId, "User");
+            }
             db.SaveChanges();
             TempData["message"] = "✔ Member removed successfully!";
             ViewBag.AllUsers = db.Users;

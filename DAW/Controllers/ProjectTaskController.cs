@@ -98,11 +98,10 @@ namespace DAW.Controllers
         public ActionResult Delete(int id)
         {
             ProjectTask task = db.Tasks.Find(id);
-            int projectId = task.ProjectId;
             db.Tasks.Remove(task);
             db.SaveChanges();
             TempData["message"] = "✔ Task removed successfully!";
-            return Redirect("/Project/Show/" + projectId);
+            return Redirect("/Project/Show/" + task.ProjectId);
         }
     }
 }

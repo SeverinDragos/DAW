@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -17,7 +18,7 @@ namespace DAW.Models
             // Add custom user claims here
             return userIdentity;
         }
-
+        public IEnumerable<SelectListItem> AllRoles { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectTask> Tasks { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

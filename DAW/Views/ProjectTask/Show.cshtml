@@ -31,9 +31,14 @@
     <p>@comm.Content</p>
     if (comm.UserId == ViewBag.currentUserId || ViewBag.isAdmin)
     {
-        using (Html.BeginForm(actionName: "Edit", controllerName: "Comment", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+        using (Html.BeginForm(actionName: "Edit", controllerName: "Comment", routeValues: new { id = comm.Id }))
         {
             <button type="submit">Edit</button>
+        }
+        using (Html.BeginForm(actionName: "Delete", controllerName: "Comment", routeValues: new { id = comm.Id }))
+        {
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button type="submit">Delete</button>
         }
     }
 }
