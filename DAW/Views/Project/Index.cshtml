@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DAW.Models.Project
+@{
     ViewBag.Title = "Projects";
 }
 <h2>@ViewBag.Title</h2>
@@ -9,11 +10,17 @@
 }
 @foreach (DAW.Models.Project project in ViewBag.Projects)
 {
-    @Html.Partial("ProjectInfo", project);
-    <br />
-    using (Html.BeginForm(actionName: "Show", controllerName: "Project", routeValues: new { id = project.Id }))
+    foreach (var user in project.TeamMembers)
     {
-        <button type="submit">View Project</button>
+        if (user.Id == ViewBag.currentuser || ViewBag.isAdmin)
+        {
+            @Html.Partial("ProjectInfo", project);
+            <br />
+            using (Html.BeginForm(actionName: "Show", controllerName: "Project", routeValues: new { id = project.Id }))
+            {
+                <button type="submit">View Project</button>
+            }
+            <hr />
+        }
     }
-    <hr />
 }

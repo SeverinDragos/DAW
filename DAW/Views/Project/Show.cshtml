@@ -34,7 +34,10 @@
     }
 }
 <hr />
-@using (Html.BeginForm(actionName: "New", controllerName: "ProjectTask", method: FormMethod.Post, routeValues: new { projectId = Model.Id }))
+@if (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
 {
-    <button type="submit">Add Task</button>
+    using (Html.BeginForm(actionName: "New", controllerName: "ProjectTask", method: FormMethod.Post, routeValues: new { projectId = Model.Id }))
+    {
+        <button type="submit">Add Task</button>
+    }
 }

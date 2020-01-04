@@ -17,16 +17,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @if (User.IsInRole("Administrator") || User.IsInRole("ProjectManager") || User.IsInRole("TeamMember")||User.IsInRole("User"))
+                {
+
+                    @Html.ActionLink("JIRA2.0", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) }
+                else
+                {
+                    @Html.ActionLink("JIRA2.0", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })}
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                        <li>@Html.ActionLink("Projects", "Index", "Project")</li>
+                        <li>@Html.ActionLink("New project", "New", "Project")</li>
                     }
-                    <li>@Html.ActionLink("Projects", "Index", "Project")</li>
-                    <li>@Html.ActionLink("New project", "New", "Project")</li>
+                    else if (User.IsInRole("ProjectManager") || User.IsInRole("TeamMember")|| User.IsInRole("User"))
+                    {
+                        <li>@Html.ActionLink("Projects", "Index", "Project")</li>
+                        <li>@Html.ActionLink("New project", "New", "Project")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

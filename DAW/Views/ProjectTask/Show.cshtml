@@ -13,10 +13,13 @@
     <button type="submit">Edit Task</button>
 }
 <br />
-@using (Html.BeginForm(actionName: "Delete", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
+@if (Model.Project.ProjectManagerId == ViewBag.currentUserId || ViewBag.isAdmin)
 {
-    @Html.HttpMethodOverride(HttpVerbs.Delete)
-    <button type="submit">Delete Task</button>
+    using (Html.BeginForm(actionName: "Delete", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button type="submit">Delete Task</button>
+    }
 }
 <strong>Assigned to: @Model.User.UserName</strong>
 <br />

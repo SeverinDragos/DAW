@@ -23,13 +23,16 @@ namespace DAW.Controllers
             }
             var projects = db.Projects.Include("TeamMembers");
             ViewBag.Projects = projects;
+            ViewBag.currentuser = User.Identity.GetUserId();
+            ViewBag.isAdmin = User.IsInRole("Administrator");
             return View();
         }
 
         public ActionResult Show(int id)
         {
             Project project = db.Projects.Find(id);
-
+            ViewBag.esteAdmin = User.IsInRole("Administrator");
+            ViewBag.utilizatorCurent = User.Identity.GetUserId();
             return View(project);
         }
 
@@ -167,13 +170,15 @@ namespace DAW.Controllers
         public ActionResult ShowTeamMembers(int id)
         {
             Project project = db.Projects.Find(id);
-
+            ViewBag.esteAdmin = User.IsInRole("Administrator");
+            ViewBag.utilizatorCurent = User.Identity.GetUserId();
             ViewBag.AllUsers = db.Users;
 
             return View("TeamMembers", project);
         }
 
         [HttpPut]
+
         public ActionResult AddTeamMember(int id, Project requestProject)
         {
             Project project = db.Projects.Find(id);

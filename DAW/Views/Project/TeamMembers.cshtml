@@ -7,12 +7,15 @@
     <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
 }
 
-@using (Html.BeginForm(actionName: "AddTeamMember", controllerName: "Project", method: FormMethod.Post))
+@if (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
 {
-    @Html.HttpMethodOverride(HttpVerbs.Put)
-    @Html.HiddenFor(m => m.Id)
-    @Html.DropDownListFor(m => m.NewUserId, new SelectList(ViewBag.AllUsers, "Id", "UserName"), "Select new member", new { @class = "form-control" })
-    <button type="submit">Add Member ➕</button>
+    using (Html.BeginForm(actionName: "AddTeamMember", controllerName: "Project", method: FormMethod.Post))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Put)
+        @Html.HiddenFor(m => m.Id)
+        @Html.DropDownListFor(m => m.NewUserId, new SelectList(ViewBag.AllUsers, "Id", "UserName"), "Select new member", new { @class = "form-control" })
+        <button type="submit">Add Member ➕</button>
+    }
 }
 
 <hr />
@@ -20,12 +23,13 @@
 @foreach (var user in Model.TeamMembers)
 {
     <p>@user.UserName</p>
-    if (user.Id != Model.ProjectManagerId)
+    if (user.Id != Model.ProjectManagerId && (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin))
     {
         using (Html.BeginForm(actionName: "RemoveTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id, userId = user.Id }))
         {
             @Html.HttpMethodOverride(HttpVerbs.Delete)
             <button type="submit">Delete <span style="color:red">✘</span></button>
+
         }
     }
 }
