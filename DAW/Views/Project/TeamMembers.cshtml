@@ -1,36 +1,37 @@
 ﻿@model DAW.Models.Project
 
-<h2>@Model.Title Team</h2>
+    <div class="jumbotron">
+        <h2>@Model.Title Team</h2>
 
-@if (TempData.ContainsKey("message"))
-{
-    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
-}
-
-@if (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
-{
-    using (Html.BeginForm(actionName: "AddTeamMember", controllerName: "Project", method: FormMethod.Post))
-    {
-        @Html.HttpMethodOverride(HttpVerbs.Put)
-        @Html.HiddenFor(m => m.Id)
-        @Html.DropDownListFor(m => m.NewUserId, new SelectList(ViewBag.AllUsers, "Id", "UserName"), "Select new member", new { @class = "form-control" })
-        <button type="submit">Add Member ➕</button>
-    }
-}
-
-<hr />
-
-@foreach (var user in Model.TeamMembers)
-{
-    <p>@user.UserName</p>
-    if (user.Id != Model.ProjectManagerId && (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin))
-    {
-        using (Html.BeginForm(actionName: "RemoveTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id, userId = user.Id }))
+        @if (TempData.ContainsKey("message"))
         {
-            @Html.HttpMethodOverride(HttpVerbs.Delete)
-            <button type="submit">Delete <span style="color:red">✘</span></button>
-
+            <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
         }
-    }
-}
 
+        @if (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+        {
+            using (Html.BeginForm(actionName: "AddTeamMember", controllerName: "Project", method: FormMethod.Post))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Put)
+                @Html.HiddenFor(m => m.Id)
+                @Html.DropDownListFor(m => m.NewUserId, new SelectList(ViewBag.AllUsers, "Id", "UserName"), "Select new member", new { @class = "form-control" })
+                <button type="submit">Add Member ➕</button>
+            }
+        }
+
+        <hr />
+
+        @foreach (var user in Model.TeamMembers)
+        {
+            <p>@user.UserName</p>
+            if (user.Id != Model.ProjectManagerId && (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin))
+            {
+                using (Html.BeginForm(actionName: "RemoveTeamMember", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id, userId = user.Id }))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button type="submit">Delete <span style="color:red">✘</span></button>
+
+                }
+            }
+        }
+    </div>

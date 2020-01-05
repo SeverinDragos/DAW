@@ -1,6 +1,13 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css?family=Ma+Shan+Zheng&display=swap');
+
+.text-body{
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: darksalmon;
 }
 
 /* Set padding to keep content from hitting the edges */

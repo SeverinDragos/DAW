@@ -2,25 +2,40 @@
 @{
     ViewBag.Title = "Projects";
 }
-<h2>@ViewBag.Title</h2>
-<hr />
-@if (TempData.ContainsKey("message"))
-{
-    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
-}
-@foreach (DAW.Models.Project project in ViewBag.Projects)
-{
-    foreach (var user in project.TeamMembers)
-    {
-        if (user.Id == ViewBag.currentuser || ViewBag.isAdmin)
+    <div class="jumbotron">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+        @if (TempData.ContainsKey("message"))
         {
-            @Html.Partial("ProjectInfo", project);
-            <br />
-            using (Html.BeginForm(actionName: "Show", controllerName: "Project", routeValues: new { id = project.Id }))
-            {
-                <button type="submit">View Project</button>
-            }
-            <hr />
+            <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
         }
-    }
-}
+        @foreach (DAW.Models.Project project in ViewBag.Projects)
+        {
+            if (ViewBag.isAdmin)
+            {
+                @Html.Partial("ProjectInfo", project);
+                <br />
+                using (Html.BeginForm(actionName: "Show", controllerName: "Project", routeValues: new { id = project.Id }))
+                {
+                    <button type="submit">View Project</button>
+                }
+                <hr />
+            }
+            else
+            {
+                foreach (var user in project.TeamMembers)
+                {
+                    if (user.Id == ViewBag.currentuser)
+                    {
+                        @Html.Partial("ProjectInfo", project);
+                        <br />
+                        using (Html.BeginForm(actionName: "Show", controllerName: "Project", routeValues: new { id = project.Id }))
+                        {
+                            <button type="submit">View Project</button>
+                        }
+                        <hr />
+                    }
+                }
+            }
+        }
+    </div>

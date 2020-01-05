@@ -8,41 +8,43 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @if (User.IsInRole("Administrator") || User.IsInRole("ProjectManager") || User.IsInRole("TeamMember")||User.IsInRole("User"))
-                {
+<body style="background-color:darksalmon">
+    <nav class="navbar container navbar-expand-sm bg-dark">
+        <a class="navbar-brand" href="#">
+            @if (User.IsInRole("Administrator") || User.IsInRole("ProjectManager") || User.IsInRole("TeamMember") || User.IsInRole("User"))
+            {
 
-                    @Html.ActionLink("JIRA2.0", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) }
-                else
-                {
-                    @Html.ActionLink("JIRA2.0", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })}
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
-                        <li>@Html.ActionLink("Projects", "Index", "Project")</li>
-                        <li>@Html.ActionLink("New project", "New", "Project")</li>
-                    }
-                    else if (User.IsInRole("ProjectManager") || User.IsInRole("TeamMember")|| User.IsInRole("User"))
-                    {
-                        <li>@Html.ActionLink("Projects", "Index", "Project")</li>
-                        <li>@Html.ActionLink("New project", "New", "Project")</li>
-                    }
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
+                @Html.ActionLink("JIRA2.0", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) }
+            else
+            {
+                @Html.ActionLink("JIRA2.0", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })}
+                
+        </a>
+        <ul class="navbar-collapse">
+            @if (User.IsInRole("Administrator"))
+            {
+                <li class="nav-item active mr-4">
+                    <a class="nav-link" href="#">  @Html.ActionLink("Users", "Index", "Users")  </a>
+                </li>
+                <li class="nav-item mr-4">
+                    <a class="nav-link" href="#">  @Html.ActionLink("Projects", "Index", "Project")  </a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">  @Html.ActionLink("New project", "New", "Project")  </a>
+                </li>
+            }
+            else if (User.IsInRole("ProjectManager") || User.IsInRole("TeamMember")|| User.IsInRole("User"))
+            {
+                <li class="nav-item active mr-3">
+                    <a class="nav-link" href="#">  @Html.ActionLink("Projects", "Index", "Project")  </a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">  @Html.ActionLink("New project", "New", "Project")  </a>
+                </li>
+            }
+        </ul>
+        <span class="nav-link mr-4"> @Html.Partial("_LoginPartial") </span>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />

@@ -1,43 +1,45 @@
 ﻿@model DAW.Models.Project
 
-@if (TempData.ContainsKey("message"))
-{
-    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
-}
-@Html.Partial("ProjectInfo", Model)
-<br />
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Project", routeValues: new { id = Model.Id }))
-{
-    <button type="submit">Update</button>
-}
-<br />
-@using (Html.BeginForm(actionName: "ShowTeamMembers", controllerName: "Project", routeValues: new { id = Model.Id }))
-{
-    <button type="submit">Project Members</button>
-}
-<br />
-@using (Html.BeginForm(actionName: "Delete", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id }))
-{
-    @Html.HttpMethodOverride(HttpVerbs.Delete)
-    <button type="submit">Delete</button>
-}
-<h2>Current Tasks:</h2>
-<hr />
-@foreach (var task in Model.Tasks)
-{
-    <h2>@task.Title</h2>
-    <p>@task.Description</p>
-    <strong>Assigned to: @task.User.UserName</strong>
-    using (Html.BeginForm(actionName: "Show", controllerName: "ProjectTask", routeValues: new { Id = task.Id }))
-    {
-        <button type="submit">Show Task</button>
-    }
-}
-<hr />
-@if (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
-{
-    using (Html.BeginForm(actionName: "New", controllerName: "ProjectTask", method: FormMethod.Post, routeValues: new { projectId = Model.Id }))
-    {
-        <button type="submit">Add Task</button>
-    }
-}
+    <div class="jumbotron">
+        @if (TempData.ContainsKey("message"))
+        {
+            <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+        }
+        @Html.Partial("ProjectInfo", Model)
+        <br />
+        @using (Html.BeginForm(actionName: "Edit", controllerName: "Project", routeValues: new { id = Model.Id }))
+        {
+            <button type="submit">Update</button>
+        }
+        <br />
+        @using (Html.BeginForm(actionName: "ShowTeamMembers", controllerName: "Project", routeValues: new { id = Model.Id }))
+        {
+            <button type="submit">Project Members</button>
+        }
+        <br />
+        @using (Html.BeginForm(actionName: "Delete", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+        {
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button type="submit">Delete</button>
+        }
+        <h2>Current Tasks:</h2>
+        <hr />
+        @foreach (var task in Model.Tasks)
+        {
+            <h2>@task.Title</h2>
+            <p class="text-monospace">@task.Description</p>
+            <strong>Assigned to: @task.User.UserName</strong>
+            using (Html.BeginForm(actionName: "Show", controllerName: "ProjectTask", routeValues: new { Id = task.Id }))
+            {
+                <button type="submit">Show Task</button>
+            }
+        }
+        <hr />
+        @if (Model.ProjectManagerId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+        {
+            using (Html.BeginForm(actionName: "New", controllerName: "ProjectTask", method: FormMethod.Post, routeValues: new { projectId = Model.Id }))
+            {
+                <button type="submit">Add Task</button>
+            }
+        }
+        </div>

@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "New Project";
 }
+<div class="jumbotron">
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm(actionName: "New", controllerName: "Project"))
@@ -19,3 +20,4 @@
     @Html.HiddenFor(m => m.TeamMembers)
     <button class="btn btn-sm btn-success" type="submit"> Create project</button>
 }
+    </div>

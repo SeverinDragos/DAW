@@ -1,55 +1,54 @@
 ﻿@model DAW.Models.ProjectTask
-@if (TempData.ContainsKey("message"))
-{
-    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
-}
-<br />
-<h3>@Model.Title</h3>
-<p style="color:mediumblue">@Model.Status</p>
-<br />
-<p>@Model.Description</p>
-@using (Html.BeginForm(actionName: "Edit", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
-{
-    <button type="submit">Edit Task</button>
-}
-<br />
-@if (Model.Project.ProjectManagerId == ViewBag.currentUserId || ViewBag.isAdmin)
-{
-    using (Html.BeginForm(actionName: "Delete", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
-    {
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-        <button type="submit">Delete Task</button>
-    }
-}
-<strong>Assigned to: @Model.User.UserName</strong>
-<br />
-<strong>Start Date: </strong>
-<p>@Model.StartDate</p>
-<strong>End Date: </strong>
-<p>@Model.FinishDate</p>
-
-@foreach (var comm in Model.Comments)
-{
-    <p>@comm.User.UserName</p>
-    <p>@comm.Content</p>
-    if (comm.UserId == ViewBag.currentUserId || ViewBag.isAdmin)
-    {
-        using (Html.BeginForm(actionName: "Edit", controllerName: "Comment", routeValues: new { id = comm.Id }))
+    <div class="jumbotron">
+        @if (TempData.ContainsKey("message"))
         {
-            <button type="submit">Edit</button>
+            <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
         }
-        using (Html.BeginForm(actionName: "Delete", controllerName: "Comment", routeValues: new { id = comm.Id }))
+        <br />
+        <h3>@Model.Title</h3>
+        <p style="color:mediumblue">@Model.Status</p>
+        <br />
+        <p class="text-monospace">@Model.Description</p>
+        @using (Html.BeginForm(actionName: "Edit", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
         {
-            @Html.HttpMethodOverride(HttpVerbs.Delete)
-            <button type="submit">Delete</button>
+            <button type="submit">Edit Task</button>
         }
-    }
-}
-@using (Html.BeginForm(actionName: "New", controllerName: "Comment", method: FormMethod.Post, routeValues: new { id = Model.Id }))
-{
-    <button type="submit">New Comment</button>
-}
+        <br />
+        @if (Model.Project.ProjectManagerId == ViewBag.currentUserId || ViewBag.isAdmin)
+        {
+            using (Html.BeginForm(actionName: "Delete", controllerName: "ProjectTask", routeValues: new { id = Model.Id }))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button type="submit">Delete Task</button>
+            }
+        }
+        <strong>Assigned to: @Model.User.UserName</strong>
+        <br />
+        <strong>Start Date: </strong>
+        <p>@Model.StartDate</p>
+        <strong>End Date: </strong>
+        <p>@Model.FinishDate</p>
 
-
-
+        @foreach (var comm in Model.Comments)
+        {
+            <p>@comm.User.UserName</p>
+            <p class="text-monospace">@comm.Content</p>
+            if (comm.UserId == ViewBag.currentUserId || ViewBag.isAdmin)
+            {
+                using (Html.BeginForm(actionName: "Edit", controllerName: "Comment", routeValues: new { id = comm.Id }))
+                {
+                    <button type="submit">Edit</button>
+                }
+                using (Html.BeginForm(actionName: "Delete", controllerName: "Comment", routeValues: new { id = comm.Id }))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button type="submit">Delete</button>
+                }
+            }
+        }
+        @using (Html.BeginForm(actionName: "New", controllerName: "Comment", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+        {
+            <button type="submit">New Comment</button>
+        }
+</div>
 
